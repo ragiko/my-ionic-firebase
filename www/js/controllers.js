@@ -75,11 +75,12 @@ angular.module('mychat.controllers', [])
     $scope.IM = {
         textMessage: ""
     };
-
+    
+    // chatsを選択
     Chats.selectRoom($state.params.roomId);
 
+    // chatsからroomNameを取得
     var roomName = Chats.getSelectedRoomName();
-        
 
     // Fetching Chat Records only if a Room is Selected
     if (roomName) {
@@ -100,11 +101,20 @@ angular.module('mychat.controllers', [])
 
 .controller('RoomsCtrl', function ($scope, Rooms, Chats, $state) {
     //console.log("Rooms Controller initialized");
+    $scope.IM = {
+        textMessage: ""
+    };
+
     $scope.rooms = Rooms.all();
 
     $scope.openChatRoom = function (roomId) {
         $state.go('tab.chat', {
             roomId: roomId
         });
+    }
+
+    $scope.createRoom = function (roomName) {
+        console.log(roomName);
+        Rooms.create(roomName);
     }
 });

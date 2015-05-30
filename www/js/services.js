@@ -31,6 +31,7 @@ angular.module('mychat.services', ['firebase'])
         },
         getSelectedRoomName: function () {
             var selectedRoom;
+
             if (selectedRoomId && selectedRoomId != null) {
                 selectedRoom = Rooms.get(selectedRoomId);
                 if (selectedRoom)
@@ -71,17 +72,33 @@ angular.module('mychat.services', ['firebase'])
     // Might use a resource here that returns a JSON array
     var ref = new Firebase(firebaseUrl);
     var rooms = $firebase(ref.child('rooms')).$asArray();
+    var roomsObj = ref.child('rooms');
 
-    console.log(rooms);
-        
     return {
         all: function () {
             return rooms;
         },
         get: function (roomId) {
-            console.log(rooms)
+            // console.log(rooms)
             // Simple index lookup
+            // console.log(rooms.$getRecord(6));
             return rooms.$getRecord(roomId);
+        },
+        create: function (roomName) {
+            console.log("create room");
+
+            roomsObj.child(rooms.length).set({
+                chats: {
+                    createdAt: Firebase.ServerValue.TIMESTAMP,
+                    from: "",
+                    message: ""
+                },
+                id: rooms.length,
+                icon: "ion-music-note",
+                name: roomName,
+                notes: "Talk to fellow music lovers about latest songs & a",
+                createdAt: Firebase.ServerValue.TIMESTAMP
+            });
         }
     }
 });

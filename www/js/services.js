@@ -62,6 +62,7 @@ angular.module('mychat.services', ['firebase'])
         }
     }
 })
+    
 
 /**
  * Simple Service which returns Rooms collection as Array from Salesforce & binds to the Scope in Controller
@@ -71,11 +72,14 @@ angular.module('mychat.services', ['firebase'])
     var ref = new Firebase(firebaseUrl);
     var rooms = $firebase(ref.child('rooms')).$asArray();
 
+    console.log(rooms);
+        
     return {
         all: function () {
             return rooms;
         },
         get: function (roomId) {
+            console.log(rooms)
             // Simple index lookup
             return rooms.$getRecord(roomId);
         }

@@ -3,7 +3,9 @@ angular.module('mychat.controllers', [])
 .controller('LoginCtrl', function ($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope) {
     //console.log('Login Controller Initialized');
 
-    var ref = new Firebase($scope.firebaseUrl);
+    // var ref = new Firebase($scope.firebaseUrl);
+    var ref = new Firebase("https://flickering-torch-2284.firebaseio.com");
+
     var auth = $firebaseAuth(ref);
 
     $ionicModal.fromTemplateUrl('templates/signup.html', {
@@ -77,6 +79,7 @@ angular.module('mychat.controllers', [])
     Chats.selectRoom($state.params.roomId);
 
     var roomName = Chats.getSelectedRoomName();
+        
 
     // Fetching Chat Records only if a Room is Selected
     if (roomName) {

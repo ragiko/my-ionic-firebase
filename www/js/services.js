@@ -87,13 +87,8 @@ angular.module('mychat.services', ['firebase'])
         create: function (roomName) {
             console.log("create room");
 
-            roomsObj.child(rooms.length).set({
-                chats: {
-                    createdAt: Firebase.ServerValue.TIMESTAMP,
-                    from: "",
-                    message: ""
-                },
-                id: rooms.length,
+            roomsObj.child(rooms.length+1).set({
+                id: rooms.length+1,
                 icon: "ion-music-note",
                 name: roomName,
                 notes: "Talk to fellow music lovers about latest songs & a",

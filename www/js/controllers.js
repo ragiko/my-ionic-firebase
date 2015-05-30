@@ -89,7 +89,6 @@ angular.module('mychat.controllers', [])
     }
 
     $scope.sendMessage = function (msg) {
-        console.log(msg);
         Chats.send($scope.displayName, msg);
         $scope.IM.textMessage = "";
     }
@@ -114,7 +113,7 @@ angular.module('mychat.controllers', [])
     }
 
     $scope.createRoom = function (roomName) {
-        console.log(roomName);
         Rooms.create(roomName);
+        $scope.IM.textMessage = "";
     }
 });

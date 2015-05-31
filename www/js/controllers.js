@@ -7,6 +7,9 @@ angular.module('mychat.controllers', [])
     var ref = new Firebase("https://flickering-torch-2284.firebaseio.com");
 
     var auth = $firebaseAuth(ref);
+        
+        
+        
 
     $ionicModal.fromTemplateUrl('templates/signup.html', {
         scope: $scope
@@ -14,9 +17,16 @@ angular.module('mychat.controllers', [])
         $scope.modal = modal;
     });
 
+    // selector
+    $scope.sexes = [
+        {name:'man'},
+        {name:'woman'},
+    ];
+    $scope.sex = $scope.sexes[0]; // man
+
     $scope.createUser = function (user) {
         console.log("Create User Function called");
-        if (user && user.email && user.password && user.displayname) {
+        if (user && user.email && user.password && user.displayname && $scope.sex) {
             $ionicLoading.show({
                 template: 'Signing Up...'
             });
@@ -28,7 +38,8 @@ angular.module('mychat.controllers', [])
                 alert("User created successfully!");
                 ref.child("users").child(userData.uid).set({
                     email: user.email,
-                    displayName: user.displayname
+                    displayName: user.displayname,
+                    sex: $scope.sex.name
                 });
                 $ionicLoading.hide();
                 $scope.modal.hide();

@@ -2,9 +2,7 @@
     <ion-content>
         <ion-list ng-show="rooms">
             <ion-item class="item item-input-inset">
-                <button ng-click="modal.show()" class="button button-small button-balanced">
-                    create
-                </button>
+                <button ng-click="modal.show()" class="button button-small button-balanced">create room</button>
             </ion-item>
             <ion-item class="item-icon-left" ng-repeat="room in rooms" type="item-text-wrap" ng-click="openChatRoom(room.id)">
                 <i class="icon {{room.icon}}"></i>

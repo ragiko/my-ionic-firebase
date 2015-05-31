@@ -1,6 +1,6 @@
 angular.module('mychat.controllers', [])
 
-.controller('LoginCtrl', function ($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope) {
+.controller('LoginCtrl', function ($scope, $ionicModal, $state, $firebaseAuth, $ionicLoading, $rootScope, $cookieStore) {
     //console.log('Login Controller Initialized');
 
     // var ref = new Firebase($scope.firebaseUrl);
@@ -57,6 +57,8 @@ angular.module('mychat.controllers', [])
                     $scope.$apply(function () {
                         $rootScope.displayName = val;
                     });
+                    
+                    $cookieStore.put("userVal", val);
                 });
                 $ionicLoading.hide();
                 $state.go('tab.rooms');
@@ -69,7 +71,7 @@ angular.module('mychat.controllers', [])
     }
 })
 
-.controller('ChatCtrl', function ($scope, Chats, $state) {
+.controller('ChatCtrl', function ($scope, Chats, $state, $cookieStore) {
     //console.log("Chat Controller initialized");
 
     $scope.IM = {
@@ -89,7 +91,11 @@ angular.module('mychat.controllers', [])
     }
 
     $scope.sendMessage = function (msg) {
-        Chats.send($scope.displayName, msg);
+        var userVal = $cookieStore.get("userVal");
+        if (!userVal) {
+            alert("cookie is nothing")
+        }
+        Chats.send(userVal, msg);
         $scope.IM.textMessage = "";
     }
 

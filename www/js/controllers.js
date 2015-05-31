@@ -98,10 +98,18 @@ angular.module('mychat.controllers', [])
     }
 })
 
-.controller('RoomsCtrl', function ($scope, Rooms, Chats, $state) {
+.controller('RoomsCtrl', function ($scope, Rooms, Chats, $state, $ionicModal) {
     //console.log("Rooms Controller initialized");
+    $scope.initRoom = function () {
+        return {
+            name: "",
+            notes: "",
+            createdAt: Firebase.ServerValue.TIMESTAMP
+        };
+    };
+        
     $scope.IM = {
-        textMessage: ""
+        room: $scope.initRoom()
     };
 
     $scope.rooms = Rooms.all();
@@ -112,8 +120,18 @@ angular.module('mychat.controllers', [])
         });
     }
 
-    $scope.createRoom = function (roomName) {
-        Rooms.create(roomName);
-        $scope.IM.textMessage = "";
+    $scope.createRoom = function (room) {
+        Rooms.create(room);
+        $scope.IM.room = $scope.initRoom();
     }
+
+    // Load the modal from the given template URL
+    $ionicModal.fromTemplateUrl('modal.html', function ($ionicModal) {
+        $scope.modal = $ionicModal;
+    }, {
+        // Use our scope for the scope of the modal to keep it simple
+        scope: $scope,
+        // The animation we want to use for the modal entrance
+        animation: 'slide-in-up'
+    });
 });

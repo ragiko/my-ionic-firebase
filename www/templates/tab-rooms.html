@@ -2,10 +2,7 @@
     <ion-content>
         <ion-list ng-show="rooms">
             <ion-item class="item item-input-inset">
-                <label class="item-input-wrapper">
-                    <input type="text" ng-model="IM.textMessage" placeholder="Type in your room name...">
-                </label>
-                <button ng-click="createRoom(IM.textMessage)" class="button button-small button-balanced">
+                <button ng-click="modal.show()" class="button button-small button-balanced">
                     create
                 </button>
             </ion-item>
@@ -21,3 +18,25 @@
         </ion-list>
     </ion-content>
 </ion-view>
+
+<script id="modal.html" type="text/ng-template">
+    <div class="modal">
+        <header class="bar bar-header bar-positive">
+            <h1 class="title">create room</h1>
+            <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+        </header>
+        <div class="list card padding">
+            <label class="item item-input">
+                <span class="input-label">name</span>
+                <input type="text" ng-model="IM.room.name">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">note</span>
+                <input type="text" ng-model="IM.room.notes">
+            </label>
+            <button ng-click="createRoom(IM.room);modal.hide()" class="button button-block button-positive activated">
+                Create Room
+            </button>
+        </div>
+    </div>
+</script>

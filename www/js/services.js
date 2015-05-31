@@ -84,14 +84,14 @@ angular.module('mychat.services', ['firebase'])
             // console.log(rooms.$getRecord(6));
             return rooms.$getRecord(roomId);
         },
-        create: function (roomName) {
+        create: function (room) {
             console.log("create room");
 
             roomsObj.child(rooms.length+1).set({
                 id: rooms.length+1,
                 icon: "ion-music-note",
-                name: roomName,
-                notes: "Talk to fellow music lovers about latest songs & a",
+                name: room.name,
+                notes: room.notes,
                 createdAt: Firebase.ServerValue.TIMESTAMP
             });
         }

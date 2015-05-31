@@ -93,13 +93,13 @@ angular.module('mychat.controllers', [])
     Chats.selectRoom($state.params.roomId);
 
     // chatsからroomNameを取得
-    var roomName = Chats.getSelectedRoomName();
-
-    // Fetching Chat Records only if a Room is Selected
-    if (roomName) {
-        $scope.roomName = " - " + roomName;
-        $scope.chats = Chats.all();
-    }
+    Chats.getSelectedRoom().then(function (room) {
+        // Fetching Chat Records only if a Room is Selected
+        if (room.name) {
+            $scope.roomName = " - " + room.name;
+            $scope.chats = Chats.all();
+        }
+    });
 
     $scope.sendMessage = function (msg) {
         var userVal = $cookieStore.get("userVal");
@@ -116,6 +116,7 @@ angular.module('mychat.controllers', [])
 })
 
 .controller('RoomsCtrl', function ($scope, Rooms, Chats, $state, $ionicModal) {
+        
     //console.log("Rooms Controller initialized");
     $scope.initRoom = function () {
         return {
